@@ -1,0 +1,24 @@
+{
+    "name": "ScrumMastor",
+    "authors": [
+        {
+            "name": "Jonathan JALOUZOT",
+            "email": "jjalouzot@groupe-exp.com"
+        }
+    ],
+    "require": {
+        "silex/silex" : "~1.1"
+    },
+    "require-dev": {
+        "silex/web-profiler": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "ScrumMastor": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "dev"
+}
