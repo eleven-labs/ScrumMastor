@@ -7,7 +7,9 @@
         }
     ],
     "require": {
-        "silex/silex" : "~1.1"
+        "silex/silex" : "~1.1",
+	"monolog/monolog": "~1.3",
+        "symfony/symfony": "~2.3"
     },
     "require-dev": {
         "silex/web-profiler": "dev-master"

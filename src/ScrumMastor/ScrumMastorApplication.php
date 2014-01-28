@@ -2,6 +2,21 @@
 
 namespace ScrumMastor;
 
+use Silex;
+use Silex\Provider;
+use Silex\Route;
+
+use Symfony\Bridge\Monolog\Logger;
+use Symfony\Bridge\Monolog\Handler\DebugHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FingersCrossedHandler;
+use Monolog\Processor\MemoryUsageProcessor;
+use Monolog\Processor\MemoryPeakUsageProcessor;
+
+use Symfony\Component\Console;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use ScrumMastor\Provider\ScrumMastorProvider;
 use Silex\Application as SilexApplication;
 
 class ScrumMastorApplication extends SilexApplication
@@ -16,17 +31,17 @@ class ScrumMastorApplication extends SilexApplication
         parent::__construct($config);
 
         $baseDir = $this->getBaseDir();
-
-        // Default configuration
+        
+	// Default configuration
         $this['app.name']       = 'ScrumMastor';
         $this['profiler']       = false;
         $this['monolog.level']  = Logger::DEBUG;
-        $this['path.config']    = $baseDir.'/config';
-        $this['path.cache']     = $baseDir.'/cache';
-        $this['path.log']       = $baseDir.'/log';
-        $this['path.views']     = $baseDir.'/views';
-        $this['path.web']       = $baseDir.'/web';
-        $this['path.data']      = $baseDir.'/data';
+        $this['path.config']    = $baseDir.'/../config';
+        $this['path.cache']     = $baseDir.'/../cache';
+        $this['path.log']       = $baseDir.'/../log';
+        $this['path.views']     = $baseDir.'/../views';
+        $this['path.web']       = $baseDir.'/../web';
+        $this['path.data']      = $baseDir.'/../data';
 
         // register monolog
         $this['monolog'] = $this->share(function ($app) {
@@ -65,9 +80,9 @@ class ScrumMastorApplication extends SilexApplication
         };
 
         $this->register(new Silex\Provider\ServiceControllerServiceProvider());
-        $this->register(new ScrumMastor\ScrumMastorProvider());
-
-        // load config
+        $this->register(new ScrumMastorProvider());
+        
+	// load config
         $this->loadConfig();
         $this->loadRoute();
     }
@@ -122,6 +137,6 @@ class ScrumMastorApplication extends SilexApplication
 
     protected function loadRoute()
     {
-    	$this->get('/', 'demo.controller:index');
+	$this->get('/', 'demo.controller:indexAction');
     }
 }

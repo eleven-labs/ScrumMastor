@@ -2,12 +2,17 @@
 
 namespace ScrumMastor\Controller;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-
 class DemoController
 {
+    protected $twig;
+
+    public function __construct($twig)
+    {
+        $this->twig = $twig;
+    }
+
     public function indexAction()
     {
-        return $app['twig']->render('demo.twig');
+        return $this->twig->render('demo.twig');
     }
 }
