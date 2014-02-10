@@ -7,17 +7,8 @@ filter:
 before_commands:
     - 'composer install'
 tools:
-    php_cs_fixer:
-        filter:
-            paths: ['src/*']
-            excluded_paths: ['vendor/*']
     php_code_coverage:
-        config_path: tests/
         filter:
             paths: ['src/*']
             excluded_paths: ['vendor/*']
-    php_cpd:
-        filter:
-            paths: ['src/*']
-            excluded_paths: ['vendor/*']
-    php_loc: true
+        test_command: 'phpunit tests/'
