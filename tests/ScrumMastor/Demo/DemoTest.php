@@ -5,7 +5,7 @@ namespace tests\ScrumMastor\Demo;
 
 class DemoTest extends \PHPUnit_Framework_TestCase
 {
-	public function testDemo()
+    public function testDemo()
     {
         $this->assertEquals(true, true);
     }
