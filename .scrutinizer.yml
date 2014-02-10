@@ -1,13 +1,23 @@
 filter:
     paths:
-        - src/
-        - tests/
+        - 'src/*'
+        - 'tests/*'
     excluded_paths:
-        - vendor/
+        - 'vendor/*'
 before_commands:
     - 'composer install'
 tools:
-    php_cs_fixer: true
-    php_code_coverage: true
-    php_cpd: true
+    php_cs_fixer:
+        filter:
+            paths: ['src/*']
+            excluded_paths: ['vendor/*']
+    php_code_coverage:
+        config_path: tests/
+        filter:
+            paths: ['src/*']
+            excluded_paths: ['vendor/*']
+    php_cpd:
+        filter:
+            paths: ['src/*']
+            excluded_paths: ['vendor/*']
     php_loc: true
