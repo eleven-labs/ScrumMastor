@@ -1,10 +1,13 @@
+filter:
+    paths:
+        - src/
+        - tests/
+    excluded_paths:
+        - vendor/
 before_commands:
     - 'composer install'
 tools:
     php_cs_fixer: true
-    php_code_sniffer: true
     php_code_coverage: true
     php_cpd: true
     php_loc: true
-    php_pdepend: true
-    php_hhvm: true
