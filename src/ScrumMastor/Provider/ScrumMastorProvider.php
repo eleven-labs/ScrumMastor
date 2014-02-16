@@ -3,9 +3,10 @@
 namespace ScrumMastor\Provider;
 
 use Silex\ServiceProviderInterface;
-use ScrumMastor\Controller\DemoController;
+use ScrumMastor\Controller\TaskController;
 use ScrumMastor\ScrumMastorApplication;
 use Silex\Application;
+use LExpress\Silex\MongoDBServiceProvider;
 
 class ScrumMastorProvider implements ServiceProviderInterface
 {
@@ -15,8 +16,8 @@ class ScrumMastorProvider implements ServiceProviderInterface
     	// $app['name.service'] = $this->share(function ($app) {
 		//    return new MyService();
     	// });
-    	$app['demo.controller'] = $app->share(function ($app) {
-		    return new DemoController($app['twig']);
+    	$app['task.controller'] = $app->share(function ($app) {
+		    return new TaskController($app['mongo'], $app['request']);
 		});
     }
 

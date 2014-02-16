@@ -8,7 +8,8 @@
     ],
     "require": {
         "silex/silex" : "~1.1",
-	"monolog/monolog": "~1.3",
+        "lexpress/mongodb-service-provider" : "dev-master",
+	    "monolog/monolog": "~1.3",
         "symfony/symfony": "~2.3"
     },
     "require-dev": {
