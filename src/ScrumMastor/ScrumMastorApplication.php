@@ -79,12 +79,13 @@ class ScrumMastorApplication extends SilexApplication
             );
         };
 
-        $this->register(new Silex\Provider\ServiceControllerServiceProvider());
-        $this->register(new ScrumMastorProvider());
-        
-	// load config
+        // load config
         $this->loadConfig();
         $this->loadRoute();
+
+        $this->register(new Silex\Provider\ServiceControllerServiceProvider());
+        $this->register(new MongoDBServiceProvider('mongodb.db'), $this['mongodb.db.options']);
+        $this->register(new ScrumMastorProvider());
     }
 
     public function boot()
@@ -137,6 +138,19 @@ class ScrumMastorApplication extends SilexApplication
 
     protected function loadRoute()
     {
-	$this->get('/', 'demo.controller:indexAction');
+       // Url for save the task
+	   $this->post('/task', 'task.controller:saveAction');
+
+       // Url for update task
+       $this->put('/task/{id}', 'task.controller:updateAction');
+
+       // Url for see one task
+       $this->get('/task/{id}', 'task.controller:getAction');
+
+       // Url for delete task
+       $this->delete('/task/{id}', 'task.controller:deleteAction');
+
+       // Url for list of tasks
+       $this->get('/tasks', 'task.controller:listAction');
     }
 }
