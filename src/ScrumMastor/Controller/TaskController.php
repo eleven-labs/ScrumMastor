@@ -23,6 +23,7 @@ class TaskController
 		if (!isset($title)){
 			return new JsonResponse('false', 500);
 		}
+		
 		$this->mongo->tasks->insert(array('title' =>  $title, 'description' =>  $this->request->get('description', '')));
 
 		return new JsonResponse('true', 200);
