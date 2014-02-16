@@ -80,13 +80,11 @@ class ScrumMastorApplication extends SilexApplication
             );
         };
 
-        
         $this->register(new Silex\Provider\ServiceControllerServiceProvider());
-        $this->register(new MongoDBServiceProvider('mongo'), $this['mongo.options']);
+        $this->register(new MongoDBServiceProvider('mongo'));
         $this->register(new ScrumMastorProvider());
-
-	    // load config
-        $this->loadConfig();
+	
+	$this->loadConfig();
         $this->loadRoute();
     }
 
