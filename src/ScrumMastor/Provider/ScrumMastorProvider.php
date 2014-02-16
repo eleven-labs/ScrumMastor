@@ -6,7 +6,7 @@ use Silex\ServiceProviderInterface;
 use ScrumMastor\Controller\TaskController;
 use ScrumMastor\ScrumMastorApplication;
 use Silex\Application;
-use LExpress\Silex\MongoDBServiceProvider
+use LExpress\Silex\MongoDBServiceProvider;
 
 class ScrumMastorProvider implements ServiceProviderInterface
 {
@@ -16,9 +16,8 @@ class ScrumMastorProvider implements ServiceProviderInterface
     	// $app['name.service'] = $this->share(function ($app) {
 		//    return new MyService();
     	// });
-
     	$app['task.controller'] = $app->share(function ($app) {
-		    return new TaskController($app['mongo.db'], $app['request']);
+		    return new TaskController($app['mongo'], $app['request']);
 		});
     }
 

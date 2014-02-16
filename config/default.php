@@ -4,9 +4,8 @@
 
 return array(
 	'debug' => true,
-	'mongodb.db.options' => array(
-			'db'   => 'srummastor' ,
-			'host' => 'troup.mongohq.com',
-			'post' =>  10022
+        'mongo.server' => 'mongodb://jonathan:test@troup.mongohq.com:10022',
+	'mongo.options' => array(
+		'db' => 'scrummastor'
 		),
 );

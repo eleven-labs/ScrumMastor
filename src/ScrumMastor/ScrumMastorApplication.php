@@ -13,6 +13,7 @@ use Monolog\Handler\FingersCrossedHandler;
 use Monolog\Processor\MemoryUsageProcessor;
 use Monolog\Processor\MemoryPeakUsageProcessor;
 
+use LExpress\Silex\MongoDBServiceProvider;
 use Symfony\Component\Console;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,11 +82,11 @@ class ScrumMastorApplication extends SilexApplication
 
         // load config
         $this->loadConfig();
-        $this->loadRoute();
-
         $this->register(new Silex\Provider\ServiceControllerServiceProvider());
-        $this->register(new MongoDBServiceProvider('mongodb.db'), $this['mongodb.db.options']);
+        $this->register(new MongoDBServiceProvider('mongo'), $this['mongo.options']);
         $this->register(new ScrumMastorProvider());
+
+	$this->loadRoute();
     }
 
     public function boot()
@@ -139,7 +140,7 @@ class ScrumMastorApplication extends SilexApplication
     protected function loadRoute()
     {
        // Url for save the task
-	   $this->post('/task', 'task.controller:saveAction');
+       $this->get('/task', 'task.controller:saveAction');
 
        // Url for update task
        $this->put('/task/{id}', 'task.controller:updateAction');

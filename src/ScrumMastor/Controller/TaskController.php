@@ -18,20 +18,14 @@ class TaskController
 	}
 
 	public function saveAction()
-	{	
-		if (!isset($this->request->get('title'))) {
-			return new JsonResponse('', 500);
+	{
+		$title = $this->request->get('title');
+		if (!isset($title)){
+			return new JsonResponse('false', 500);
 		}
+		$this->mongo->tasks->insert(array('title' =>  $title, 'description' =>  $this->request->get('description', '')));
 
-		$this->mongo->tasks->insert({'title': $this->request->get('title'), ''})
-
-		return new JsonResponse('', 200);
+		return new JsonResponse('true', 200);
 	}
 
-    public function deleteAction($id)
-    {
-        $this->mongo->tasks->delete({'id': $id}, {"justOne": true});
-
-        return new JsonResponse('', 200);
-    }
 }
