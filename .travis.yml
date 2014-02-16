@@ -8,7 +8,7 @@ php:
   - 5.5
 
 before_script:
-  - before_script: phpenv config-add config.ini
+  - phpenv config-add config.ini
   - composer install -v
 
 script: phpunit tests
