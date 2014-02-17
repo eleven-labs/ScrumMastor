@@ -8,5 +8,6 @@ For install project:
  - composer install
  - vi config/default.php and use your config
  
+ For mongo you can use http://www.mongohq.com
  
  All is done your project is ok
