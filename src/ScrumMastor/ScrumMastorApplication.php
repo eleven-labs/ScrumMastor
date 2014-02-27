@@ -77,14 +77,14 @@ class ScrumMastorApplication extends SilexApplication
             return array(
                 'cache'     => $app['path.cache'] . '/twig',
                 'charset'   => $app['charset'],
-            );
+                );
         };
 
         $this->register(new Silex\Provider\ServiceControllerServiceProvider());
         $this->register(new MongoDBServiceProvider('mongo'));
         $this->register(new ScrumMastorProvider());
-	
-	$this->loadConfig();
+
+        $this->loadConfig();
         $this->loadRoute();
     }
 
@@ -129,7 +129,7 @@ class ScrumMastorApplication extends SilexApplication
         $config = array_replace_recursive(
             require $this['path.config'] . '/default.php',
             require $this['path.config'] . '/' . $this['env'] . '.php'
-        );
+            );
 
         foreach ($config as $key => $value) {
             $this[$key] = $value;
@@ -138,19 +138,30 @@ class ScrumMastorApplication extends SilexApplication
 
     protected function loadRoute()
     {
-       // Url for save the task
-       $this->post('/task', 'task.controller:saveAction');
+        // Url for save the task
+        $this->post('/task', 'task.controller:saveAction');
 
-       // Url for update task
-       $this->put('/task/{id}', 'task.controller:updateAction');
+        // Url for update task
+        $this->put('/task/{id}', 'task.controller:updateAction');
 
-       // Url for see one task
-       $this->get('/task/{id}', 'task.controller:getAction');
+        // Url for see one task
+        $this->get('/task/{id}', 'task.controller:getAction');
 
-       // Url for delete task
-       $this->delete('/task/{id}', 'task.controller:deleteAction');
+        // Url for delete task
+        $this->delete('/task/{id}', 'task.controller:deleteAction');
 
-       // Url for list of tasks
-       $this->get('/tasks', 'task.controller:listAction');
+        // Url for list of tasks
+        $this->get('/tasks', 'task.controller:listAction');
+
+        //Get Tag list
+        $this->get('/tags', 'tag.controller:listAction');
+
+        //Add tag to task
+        $this->post('/addTag', 'tag.controller:setTagAction');
+
+        //Add tag to tag list
+        $this->post('/tag', 'tag.controller:saveAction');
+
+
     }
 }

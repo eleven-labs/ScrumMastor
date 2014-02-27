@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "218d670dd2fbb96c515e2fb4f8f7104ae4d73edb"
+                "reference": "088ea3b5dfbe52adf7b12623caa897e9ee1d795e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/218d670dd2fbb96c515e2fb4f8f7104ae4d73edb",
-                "reference": "218d670dd2fbb96c515e2fb4f8f7104ae4d73edb",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/088ea3b5dfbe52adf7b12623caa897e9ee1d795e",
+                "reference": "088ea3b5dfbe52adf7b12623caa897e9ee1d795e",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-02-03 22:09:20"
+            "time": "2014-02-23 21:16:16"
         },
         {
             "name": "doctrine/cache",
@@ -411,7 +411,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -470,12 +470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "6cabe95f23322735f446b00ca8582b6c875dcbfe"
+                "reference": "0ac27c8089d0ec41728d96b5aa0dcad18fb0d459"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6cabe95f23322735f446b00ca8582b6c875dcbfe",
-                "reference": "6cabe95f23322735f446b00ca8582b6c875dcbfe",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/0ac27c8089d0ec41728d96b5aa0dcad18fb0d459",
+                "reference": "0ac27c8089d0ec41728d96b5aa0dcad18fb0d459",
                 "shasum": ""
             },
             "require": {
@@ -483,9 +483,9 @@
                 "psr/log": "~1.0"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "~2.4.8",
-                "doctrine/couchdb": "dev-master",
-                "mlehner/gelf-php": "1.0.*",
+                "aws/aws-sdk-php": "~2.4, >2.4.8",
+                "doctrine/couchdb": "~1.0@dev",
+                "graylog2/gelf-php": "~1.0",
                 "phpunit/phpunit": "~3.7.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*"
@@ -495,7 +495,7 @@
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
-                "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
@@ -506,8 +506,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Monolog": "src/"
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -529,7 +529,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-02-06 20:35:10"
+            "time": "2014-02-26 12:30:17"
         },
         {
             "name": "pimple/pimple",
@@ -566,7 +566,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
@@ -626,12 +628,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "b7df67ff364eabec89033b433bbe449ee72301d4"
+                "reference": "235c4950f20f468254b7f7325ed6faad5756a2f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/b7df67ff364eabec89033b433bbe449ee72301d4",
-                "reference": "b7df67ff364eabec89033b433bbe449ee72301d4",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/235c4950f20f468254b7f7325ed6faad5756a2f7",
+                "reference": "235c4950f20f468254b7f7325ed6faad5756a2f7",
                 "shasum": ""
             },
             "require": {
@@ -704,24 +706,25 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2014-02-11 09:00:06"
+            "time": "2014-02-22 07:10:18"
         },
         {
             "name": "symfony/icu",
-            "version": "1.0.x-dev",
+            "version": "1.2.x-dev",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975"
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/98e197da54df1f966dd5e8a4992135703569c987",
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987",
                 "shasum": ""
             },
             "require": {
+                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -751,7 +754,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 09:12:07"
+            "time": "2013-10-04 10:06:38"
         },
         {
             "name": "symfony/symfony",
@@ -759,12 +762,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "f828aee7f749009a574eee0a1ad5bfd092b0d488"
+                "reference": "7baeaa2fd7b9fa515a705159650c9349dd9cff61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/f828aee7f749009a574eee0a1ad5bfd092b0d488",
-                "reference": "f828aee7f749009a574eee0a1ad5bfd092b0d488",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/7baeaa2fd7b9fa515a705159650c9349dd9cff61",
+                "reference": "7baeaa2fd7b9fa515a705159650c9349dd9cff61",
                 "shasum": ""
             },
             "require": {
@@ -866,7 +869,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-02-11 13:52:21"
+            "time": "2014-02-24 16:21:51"
         },
         {
             "name": "twig/twig",
@@ -874,12 +877,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "c756082c0ccf103733682e5243c114c165d77158"
+                "reference": "8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/c756082c0ccf103733682e5243c114c165d77158",
-                "reference": "c756082c0ccf103733682e5243c114c165d77158",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2",
+                "reference": "8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2",
                 "shasum": ""
             },
             "require": {
@@ -923,7 +926,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-02-13 21:54:38"
+            "time": "2014-02-24 15:39:56"
         }
     ],
     "packages-dev": [
