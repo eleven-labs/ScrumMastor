@@ -33,6 +33,7 @@ class TagController
     /**
     *
     * Add tag to the tag list
+    *
     */
     public function saveAction()
     {
@@ -51,6 +52,7 @@ class TagController
     /**
     *
     * Add tag to a task
+    *
     */
     public function setTagAction() {
         $name = $this->request->get('name');
@@ -62,8 +64,13 @@ class TagController
 
         $task = $this->mongo->tasks->findOne(array('_id' => new \MongoId('530f79b2d58c90be0a0041a7')));
 
-       
-        print_r($task);die();
+        if (!$task) {
+            return new JsonResponse('Task not found', 404);
+        }
+
+        $this->mongo->tasks->update(array('_id' => new \MongoId('530f79b2d58c90be0a0041a7')), array('$addToSet' => array('Tags' => $name)));
+
+        return new JsonResponse('true', 200);
 
     }
 
