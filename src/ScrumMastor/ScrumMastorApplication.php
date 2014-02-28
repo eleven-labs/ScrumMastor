@@ -165,5 +165,8 @@ class ScrumMastorApplication extends SilexApplication
         //Search by tag
         $this->get('/search/tag', 'tag.controller:searchAction'); 
 
+        // Url for delete tag in tag list
+        $this->delete('/tag', 'tag.controller:deleteAction');
+
     }
 }

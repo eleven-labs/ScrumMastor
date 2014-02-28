@@ -51,6 +51,25 @@ class TagController
 
     /**
     *
+    * Delete tag in tag list
+    *
+    */
+    public function deleteAction()
+    {
+        $name = $this->request->get('name');
+
+        if (!isset($name)) {
+            return new JsonResponse('false', 500);
+        }
+        
+        $this->mongo->tags->remove(array('name' =>  $name));
+
+        return new JsonResponse('true', 200);
+    }
+
+
+    /**
+    *
     * Add tag to a task
     *
     */
@@ -93,6 +112,9 @@ class TagController
         return new JsonResponse(iterator_to_array($tasks), 200);
 
     }
+
+
+
 
 
 }
