@@ -162,6 +162,8 @@ class ScrumMastorApplication extends SilexApplication
         //Add tag to tag list
         $this->post('/tag', 'tag.controller:saveAction');
 
+        //Search by tag
+        $this->get('/search/tag', 'tag.controller:searchAction'); 
 
     }
 }

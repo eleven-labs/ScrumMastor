@@ -74,7 +74,25 @@ class TagController
 
     }
 
+    
 
+    /**
+    *
+    * Search tasks with tag
+    *
+    */
+    public function searchAction() {
+        $name = $this->request->get('name');
+
+        if (!isset($name) || $name == '') {
+            return new JsonResponse('false', 500);
+        }  
+
+        $tasks = $this->mongo->tasks->find(array("Tags" => $name));
+
+        return new JsonResponse(iterator_to_array($tasks), 200);
+
+    }
 
 
 }
