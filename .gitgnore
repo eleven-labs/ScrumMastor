@@ -1,5 +1,0 @@
-cache/*
-vendor/*
-app.db
-!.gitkeep
-config/default.php
