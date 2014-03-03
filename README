@@ -1,13 +1,17 @@
 ScrumMastor
 -----------
 
-The project scrumMastor is the api SILEX for project ScrumMastorClient
+This project serves as an api backend for the ScrumMastorClient project.
 
-
-For install project:
+To install:
+ - install pear if necessary: sudo apt-get install php5-dev php5-cli php-pear
+ - install the mongo extension: sudo pecl install mongo
+ - enable ext-mongo: add extension=mongo.so to /etc/php5/cli/php.ini
+ - restart apache: sudo service apache2 restart
+ - git clone git@github.com:eleven-labs/ScrumMastor.git
  - composer install
  - vi config/default.php and use your config
  
- For mongo you can use http://www.mongohq.com
+For Mongo, you can use http://www.mongohq.com
  
- All is done your project is ok
+All is done, your project is ready.
