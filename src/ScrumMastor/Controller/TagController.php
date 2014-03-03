@@ -81,7 +81,7 @@ class TagController
             return new JsonResponse('false', 500);
         }
 
-        $task = $this->mongo->tasks->findOne(array('_id' => new \MongoId('530f79b2d58c90be0a0041a7')));
+        $task = $this->mongo->tasks->findOne(array('_id' => new \MongoId($id)));
 
         if (!$task) {
             return new JsonResponse('Task not found', 404);
