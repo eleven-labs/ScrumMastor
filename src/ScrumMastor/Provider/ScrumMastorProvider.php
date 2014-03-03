@@ -4,6 +4,7 @@ namespace ScrumMastor\Provider;
 
 use Silex\ServiceProviderInterface;
 use ScrumMastor\Controller\TaskController;
+use ScrumMastor\Controller\TagController;
 use ScrumMastor\ScrumMastorApplication;
 use Silex\Application;
 use LExpress\Silex\MongoDBServiceProvider;
@@ -19,6 +20,10 @@ class ScrumMastorProvider implements ServiceProviderInterface
     	$app['task.controller'] = $app->share(function ($app) {
 		    return new TaskController($app['mongo'], $app['request']);
 		});
+
+        $app['tag.controller'] = $app->share(function ($app) {
+            return new TagController($app['mongo'], $app['request']);
+        });
     }
 
     public function boot(Application $app)

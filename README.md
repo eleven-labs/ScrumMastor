@@ -5,6 +5,7 @@ The project scrumMastor is the api SILEX for project ScrumMastorClient
 
 
 For install project:
+ - cp config/default.php.dist config default.php
  - composer install
  - vi config/default.php and use your config
  
