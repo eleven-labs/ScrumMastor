@@ -1,4 +1,4 @@
-ScrumMastor
+ScrumMastor   [![Build Status](https://travis-ci.org/eleven-labs/ScrumMastor.png?branch=master)](https://travis-ci.org/eleven-labs/ScrumMastor)
 -----------
 
 The project scrumMastor is the api SILEX for project ScrumMastorClient
