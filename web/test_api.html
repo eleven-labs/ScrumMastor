@@ -1,0 +1,44 @@
+<html>
+
+<h2>Task</h2>
+<form method="POST" action="index_dev.php/task">
+
+Title : <input type="text" name="title"/><br />
+Description : <input type="text" name="description"/><br />
+<input type="submit" />
+</form>
+
+<h2>Tag</h2>
+<form method="POST" action="index_dev.php/tag">
+
+Name : <input type="text" name="name"/><br />
+<input type="submit" />
+</form>
+
+
+<h2>Add Tag to task</h2>
+<form method="POST" action="index_dev.php/addTag">
+
+Name : <input type="text" name="name"/><br />
+Task : <input type="text" value="530f79b2d58c90be0a0041a7" name="task"/><br />
+<input type="submit" />
+</form>
+
+
+<h2>Search Tasks with tag</h2>
+<form method="GET" action="index_dev.php/search/tag">
+
+Name : <input type="text" name="name"/><br />
+<input type="submit" />
+</form>
+
+<h2>Delete tag</h2>
+<form method="POST" action="index_dev.php/tag">
+
+Name : <input type="text" name="name"/><br />
+<input type="hidden" id="_method" name="_method" value="DELETE" />
+<input type="submit" />
+</form>
+
+</html>
+

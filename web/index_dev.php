@@ -8,4 +8,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 
 Debug::enable();
 $app = new ScrumMastorApplication(array('env' => 'dev'));
+
+Request::enableHttpMethodParameterOverride();
+
 $app->run();
