@@ -4,14 +4,12 @@ ScrumMastor
 This project serves as an api backend for the ScrumMastorClient project.
 
 To install:
- - install pear if necessary: sudo apt-get install php5-dev php5-cli php-pear
- - install the mongo extension: sudo pecl install mongo
- - enable ext-mongo: add extension=mongo.so to /etc/php5/cli/php.ini
- - restart apache: sudo service apache2 restart
+ - install PHP's mongo extension (through pear for ex)
+ - enable the mongo extension
  - git clone git@github.com:eleven-labs/ScrumMastor.git
  - composer install
- - vi config/default.php and use your config
+ - edit config/default.php to use the values you need
  
 For Mongo, you can use http://www.mongohq.com
- 
+
 All is done, your project is ready.
