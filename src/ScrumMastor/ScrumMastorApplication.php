@@ -148,7 +148,7 @@ class ScrumMastorApplication extends SilexApplication
         $this->get('/task/{id}', 'task.controller:getAction');
 
         // Url for delete task
-        $this->delete('/task', 'task.controller:deleteAction');
+        $this->delete('/task/{id}', 'task.controller:deleteAction');
 
         // Url for list of tasks
         $this->get('/tasks', 'task.controller:listAction');
