@@ -2,3 +2,5 @@ cache/*
 vendor/*
 app.db
 !.gitkeep
+log/
+config/default.php
