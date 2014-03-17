@@ -5,3 +5,4 @@ app.db
 log/
 build/
 config/default.php
+build/
