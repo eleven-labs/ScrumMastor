@@ -56,7 +56,7 @@ class TaskController
         if (is_null($return['err'])) {
             return new JsonResponse('true', 200); //delete with success
         } else {
-            return new JsonResponse('false', 500); //cannot remove
+            return new JsonResponse('Cannot remove task', 401); //cannot remove
         }
     }
 
