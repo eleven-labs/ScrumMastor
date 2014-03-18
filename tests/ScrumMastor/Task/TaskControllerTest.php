@@ -2,13 +2,10 @@
 
 namespace tests\ScrumMastor\Task;
 
-class TaskControllerTest extends \Silex\WebTestCase
-{
-    public function createApplication()
-    {
-        return require __DIR__ . '/../../bootstrap.php';
-    }
+use tests\WebTestCaseTest;
 
+class TaskControllerTest extends WebTestCaseTest
+{
     public function testSave()
     {
         $this->assertEquals(true, true);
