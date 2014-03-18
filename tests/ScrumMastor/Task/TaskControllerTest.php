@@ -52,8 +52,8 @@ class TaskControllerTest extends \Silex\WebTestCase
         $tasks = iterator_to_array($tasks);
         foreach ($tasks as $key=>$value) {
             $client->request("DELETE", "/task/".$key, array('id' => $key));
-            $this->assertEquals(200, $client->getResponse()->getStatusCode());
-            $this->assertEquals("\"true\"", $client->getResponse()->getContent());
+            $this->assertEquals(204, $client->getResponse()->getStatusCode());
+            $this->assertEquals(null, $client->getResponse()->getContent());
         }
     }
 }

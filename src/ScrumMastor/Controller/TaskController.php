@@ -54,7 +54,7 @@ class TaskController
 
         $return = $this->mongo->tasks->remove(array('_id' => new \MongoId($id)));
         if (is_null($return['err'])) {
-            return new JsonResponse('true', 200); //delete with success
+            return new JsonResponse(null, 204); //delete with success
         } else {
             return new JsonResponse('Cannot remove task', 401); //cannot remove
         }
