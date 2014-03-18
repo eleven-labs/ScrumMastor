@@ -9,11 +9,13 @@ class TaskController
 {
     protected $mongo;
     protected $request;
+    protected $taskService;
 
-    public function __construct($mongo, Request $request)
+    public function __construct($mongo, Request $request, $taskService)
     {
         $this->mongo = $mongo;
         $this->request = $request;
+        $this->taskService = $taskService;
     }
 
     public function saveAction()
@@ -32,6 +34,7 @@ class TaskController
 
     /**
      * Delete task by ID
+     * @param  string       $id ID of Task
      * @return JsonResponse String and HTTP Code
      */
     public function deleteAction($id)
@@ -59,6 +62,36 @@ class TaskController
             return new JsonResponse(null, 204); //delete with success
         } else {
             return new JsonResponse('Cannot remove task', 401); //cannot remove
+        }
+    }
+
+    /**
+     * Edit task by ID
+     * @param  string       $id ID of Task
+     * @return JsonResponse String and HTTP Code
+     */
+    public function updateAction($id)
+    {
+        $title = $this->request->get('title');
+        $description = $this->request->get('description');
+
+        if (empty($title) && empty($description)) {
+            return new JsonResponse("Title or Description fields cannot be null", 406);
+        }
+
+        if ($this->taskService->existId($id)) {
+            $return = $this->mongo->tasks->update(
+                array('_id' => new \MongoId($id)),
+                array('$set' => array('title' => 'egaegaeg'))
+            );
+
+            if ($return['err'] === null) {
+                return new JsonResponse("Task updated", 200);
+            } else {
+                return new JsonResponse("Cannot update task", 401);
+            }
+        } else {
+            return new JsonResponse("Task not found", 404);
         }
     }
 
