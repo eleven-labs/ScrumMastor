@@ -35,7 +35,7 @@ class TaskController
     public function deleteAction($id)
     {
         $id = $this->request->get('id');
-        
+
         if (empty($id)) {
             return new JsonResponse("ID Parameter is empty", 500); //input invalid
         }
@@ -46,7 +46,7 @@ class TaskController
             return new JsonResponse("ID Parameter is invalid", 500); //input invalid
         }
 
-        $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id'=>true));
+        $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id' => true));
 
         if (!count(iterator_to_array($task))) {
             return new JsonResponse("Task not found", 404); //id not found
