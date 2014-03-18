@@ -4,8 +4,8 @@
 
 return array(
 	'debug' => true,
-        'mongo.server' => 'mongodb://jonathan:test@troup.mongohq.com:10022',
+        'mongo.server' => 'mongodb://localhost',
 	    'mongo.options' => array(
-		'db' => 'scrummastor'
+		'db' => 'myapp'
 		),
 );
