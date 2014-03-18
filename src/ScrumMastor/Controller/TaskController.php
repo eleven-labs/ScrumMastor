@@ -48,7 +48,7 @@ class TaskController
 
         $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id' => true));
 
-        if (!count(iterator_to_array($task))) {
+        if ($task->count() === 0) {
             return new JsonResponse("Task not found", 404); //id not found
         }
 
