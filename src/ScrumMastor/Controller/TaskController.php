@@ -71,15 +71,23 @@ class TaskController
     {
         $title = $this->request->get('title');
         $description = $this->request->get('description');
-
+        $newData = array();
         if (empty($title) && empty($description)) {
             return new JsonResponse("Title or Description fields cannot be null", 406);
+        }
+        
+        if(!empty($title)){
+            $newData['title'] = $title;
+        }
+        
+        if(!empty($description)){
+            $newData['description'] = $description;
         }
 
         if ($this->taskService->existId($id)) {
             $return = $this->taskService->updateTask(
                 array('_id' => new \MongoId($id)),
-                array('$set' => array('title' => 'egaegaeg'))
+                array('$set' => $newData)
             );
 
             if ($return) {
