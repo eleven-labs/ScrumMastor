@@ -99,4 +99,14 @@ class TaskServiceTest extends WebTestCaseTest
                 array('$set' => array('title' => 'egaegaeg')));
         $this->assertTrue($return);
     }
+    
+    public function testUpdateTaskDesc(){
+        $data = array('title' => 'Test service as unit', 'description' => 'I can haz cheezburger');
+        $this->app['mongo']->tasks->insert($data);
+        
+        $taskService = new \ScrumMastor\Service\TaskService($this->app['mongo']);
+        $return = $taskService->updateTask(array('_id' => $data['_id']),
+                array('$set' => array('description' => 'egaegaeg')));
+        $this->assertTrue($return);
+    }
 }
