@@ -31,7 +31,7 @@ class TaskService
             $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id' => true));
 
             if ($task->count() === 1) {
-                return true; //id not found
+                return true; //id found
             } else {
                 return false;
             }
@@ -40,13 +40,26 @@ class TaskService
         }
     }
 
+    public function getTaskById($id, $filter = array('_id' => true))
+    {
+        if ($this->existId($id)) {
+            $task = $this->mongo->tasks->find(
+                    array('_id' => new \MongoId($id)),
+                    $filter);
+            return iterator_to_array($task);
+        } else {
+            return false;
+        }
+    }
+
     public function insertTask($data)
     {
         try {
-            $this->mongo->tasks->insert($data);   
+            $this->mongo->tasks->insert($data);
         } catch (\Exception $ex) {
             return false;
         }
+
         return true;
     }
 
@@ -57,6 +70,7 @@ class TaskService
         } catch (\Exception $ex) {
             return false;
         }
+
         return true;
     }
 
@@ -70,6 +84,7 @@ class TaskService
         } catch (\Exception $ex) {
             return false;
         }
+
         return true;
     }
 }
