@@ -11,9 +11,8 @@ class TaskController
     protected $request;
     protected $taskService;
 
-    public function __construct($mongo, Request $request, $taskService)
+    public function __construct(Request $request, $taskService)
     {
-        $this->mongo = $mongo;
         $this->request = $request;
         $this->taskService = $taskService;
     }
@@ -25,11 +24,13 @@ class TaskController
             return new JsonResponse('false', 500);
         }
 
-        $task = array('title' =>  $title, 'description' =>  $this->request->get('description', ''));
-
-        $this->mongo->tasks->insert($task);
-
-        return new JsonResponse(["success" => "Task Added", "_id" => $task["_id"]], 200);
+        $data = array('title' => $title, 'description' => $this->request->get('description', ''));
+        $return = $this->taskService->insertTask($data);
+        if ($return) {
+            return new JsonResponse('true', 200);
+        } else {
+            return new JsonResponse('Cannot insert Task', 500);
+        }
     }
 
     /**
@@ -45,23 +46,19 @@ class TaskController
             return new JsonResponse("ID Parameter is empty", 500); //input invalid
         }
 
-        try {
-            $mongoId = new \MongoId($id);
-        } catch (\MongoException $e) {
-            return new JsonResponse("ID Parameter is invalid", 500); //input invalid
+        if (!$this->taskService->isValidId($id)) {
+            return new JsonResponse("ID Parameter is invalid", 500);
         }
 
-        $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id' => true));
-
-        if ($task->count() === 0) {
-            return new JsonResponse("Task not found", 404); //id not found
-        }
-
-        $return = $this->mongo->tasks->remove(array('_id' => new \MongoId($id)));
-        if (is_null($return['err'])) {
-            return new JsonResponse(null, 204); //delete with success
+        if ($this->taskService->existId($id)) {
+            $return = $this->taskService->removeTask(array('_id' => new \MongoId($id)));
+            if ($return) {
+                return new JsonResponse(null, 204); //delete with success
+            } else {
+                return new JsonResponse('Cannot remove task', 401); //cannot remove
+            }
         } else {
-            return new JsonResponse('Cannot remove task', 401); //cannot remove
+            return new JsonResponse("Task not found", 404);
         }
     }
 
@@ -80,12 +77,12 @@ class TaskController
         }
 
         if ($this->taskService->existId($id)) {
-            $return = $this->mongo->tasks->update(
+            $return = $this->taskService->updateTask(
                 array('_id' => new \MongoId($id)),
                 array('$set' => array('title' => 'egaegaeg'))
             );
 
-            if ($return['err'] === null) {
+            if ($return) {
                 return new JsonResponse("Task updated", 200);
             } else {
                 return new JsonResponse("Cannot update task", 401);
