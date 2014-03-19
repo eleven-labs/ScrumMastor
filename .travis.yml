@@ -13,5 +13,11 @@ before_script:
   - phpenv config-add config.ini
   - composer install -v
 
-script: phpunit tests
+script: 
+  - phpunit tests
+  - phpunit --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
