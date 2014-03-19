@@ -75,12 +75,12 @@ class TaskController
         if (empty($title) && empty($description)) {
             return new JsonResponse("Title or Description fields cannot be null", 406);
         }
-        
-        if(!empty($title)){
+
+        if (!empty($title)) {
             $newData['title'] = $title;
         }
-        
-        if(!empty($description)){
+
+        if (!empty($description)) {
             $newData['description'] = $description;
         }
 
@@ -95,6 +95,20 @@ class TaskController
             } else {
                 return new JsonResponse("Cannot update task", 401);
             }
+        } else {
+            return new JsonResponse("Task not found", 404);
+        }
+    }
+
+    /**
+     * Get task by ID
+     * @param  string       $id ID of Task
+     * @return JsonResponse String and HTTP Code
+     */
+    public function getAction($id)
+    {
+        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, '_id' => false))) {
+            return new JsonResponse($task, 200);
         } else {
             return new JsonResponse("Task not found", 404);
         }
