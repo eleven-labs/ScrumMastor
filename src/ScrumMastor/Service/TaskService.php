@@ -39,4 +39,37 @@ class TaskService
             return false;
         }
     }
+
+    public function insertTask($data)
+    {
+        $return = $this->mongo->tasks->insert($data);
+        if ($return['err'] === null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function removeTask($data)
+    {
+        $return = $this->mongo->tasks->remove($data);
+        if ($return['err'] === null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateTask($data, $newData)
+    {
+        $return = $this->mongo->tasks->update(
+                $data,
+                $newData
+            );
+        if ($return['err'] === null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -17,7 +17,7 @@ class ScrumMastorProvider implements ServiceProviderInterface
         //    return new MyService();
         // });
         $app['task.controller'] = $app->share(function ($app) {
-            return new TaskController($app['mongo'], $app['request'], $app['task.service']);
+            return new TaskController($app['request'], $app['task.service']);
         });
 
         $app['tag.controller'] = $app->share(function ($app) {
