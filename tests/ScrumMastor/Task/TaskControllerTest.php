@@ -57,7 +57,7 @@ class TaskControllerTest extends WebTestCaseTest
             $this->assertEquals(null, $client->getResponse()->getContent());
         }
     }
-
+    
     public function testUpdateEmptyParameter()
     {
         $client = $this->createClient();
@@ -97,6 +97,18 @@ class TaskControllerTest extends WebTestCaseTest
         $this->assertEquals($client->getResponse()->getContent(), "\"true\"");
     }
 
+    public function testUpdateDesc()
+    {
+        $client = $this->createClient();
+        $tasks = $this->app['mongo']->tasks->find(array('title'=>'Test unit update'));
+        $tasks = iterator_to_array($tasks);
+        foreach ($tasks as $key=>$value) {
+            $client->request("PUT", "/task/".$key, array('id' => $key, 'description' => 'Test unit has been updated'));
+            $this->assertEquals(200, $client->getResponse()->getStatusCode());
+            $this->assertEquals("\"Task updated\"", $client->getResponse()->getContent());
+        }
+    }
+    
     public function testUpdate()
     {
         $client = $this->createClient();
