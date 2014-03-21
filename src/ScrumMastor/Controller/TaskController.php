@@ -27,7 +27,7 @@ class TaskController
 
         $this->mongo->tasks->insert($task);
 
-        return new JsonResponse(["sucess" => "Task Added", "_id" => $task["_id"]], 200);
+        return new JsonResponse(["success" => "Task Added", "_id" => $task["_id"]], 200);
     }
 
     /**
