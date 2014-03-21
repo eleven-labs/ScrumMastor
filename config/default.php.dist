@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 // Here config global
 
 return array(
-	'debug' => true,
-        'mongo.server' => 'mongodb://localhost',
-	    'mongo.options' => array(
-		'db' => 'myapp'
-		),
+    'debug' => true,
+    'mongo.server' => 'mongodb://localhost',
+    'mongo.options' => array(
+       'db' => 'myapp'
+    ),
 );
