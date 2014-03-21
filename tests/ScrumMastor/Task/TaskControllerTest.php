@@ -39,7 +39,11 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request('POST', '/task', array('title' => 'Test unit', 'description' => 'Task use in test unit'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
-        $this->assertEquals($client->getResponse()->getContent(), "\"true\"");
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEquals($result["success"], "Task Added");
+        $this->assertArrayHasKey('_id', $result);
     }
 
     public function testDelete()

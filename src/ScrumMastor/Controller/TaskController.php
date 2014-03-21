@@ -23,9 +23,11 @@ class TaskController
             return new JsonResponse('false', 500);
         }
 
-        $this->mongo->tasks->insert(array('title' =>  $title, 'description' =>  $this->request->get('description', '')));
+        $task = array('title' =>  $title, 'description' =>  $this->request->get('description', ''));
 
-        return new JsonResponse('true', 200);
+        $this->mongo->tasks->insert($task);
+
+        return new JsonResponse(["success" => "Task Added", "_id" => $task["_id"]], 200);
     }
 
     /**
