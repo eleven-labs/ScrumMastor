@@ -21,15 +21,15 @@ class TaskController
     {
         $title = $this->request->get('title');
         if (!isset($title)) {
-            return new JsonResponse('false', 500);
+            return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
 
-        $data = array('title' => $title, 'description' => $this->request->get('description', ''));
+        $data = ['title' => $title, 'description' => $this->request->get('description', '')];
         $return = $this->taskService->insertTask($data);
         if ($return) {
-            return new JsonResponse('true', 200);
+            return new JsonResponse(['success' => 'Task successfully inserted'], 200);
         } else {
-            return new JsonResponse('Cannot insert Task', 500);
+            return new JsonResponse(['error' => 'Cannot insert task'], 500);
         }
     }
 
@@ -43,22 +43,22 @@ class TaskController
         $id = $this->request->get('id');
 
         if (empty($id)) {
-            return new JsonResponse("ID Parameter is empty", 500); //input invalid
+            return new JsonResponse(['error' => 'ID Parameter is empty'], 500); //input invalid
         }
 
         if (!$this->taskService->isValidId($id)) {
-            return new JsonResponse("ID Parameter is invalid", 500);
+            return new JsonResponse(['error' => 'ID Parameter is invalid'], 500);
         }
 
         if ($this->taskService->existId($id)) {
             $return = $this->taskService->removeTask(array('_id' => new \MongoId($id)));
             if ($return) {
-                return new JsonResponse(null, 204); //delete with success
+                return new JsonResponse(['success' => 'Task successfully deleted'], 204); //delete with success
             } else {
-                return new JsonResponse('Cannot remove task', 401); //cannot remove
+                return new JsonResponse(['error' => 'Cannot remove task'], 401); //cannot remove
             }
         } else {
-            return new JsonResponse("Task not found", 404);
+            return new JsonResponse(['error' => 'Task not found'], 404);
         }
     }
 
@@ -73,14 +73,14 @@ class TaskController
         $description = $this->request->get('description');
         $newData = array();
         if (empty($title) && empty($description)) {
-            return new JsonResponse("Title or Description fields cannot be null", 406);
+            return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
         }
-        
-        if(!empty($title)){
+
+        if (!empty($title)) {
             $newData['title'] = $title;
         }
-        
-        if(!empty($description)){
+
+        if (!empty($description)) {
             $newData['description'] = $description;
         }
 
@@ -91,12 +91,12 @@ class TaskController
             );
 
             if ($return) {
-                return new JsonResponse("Task updated", 200);
+                return new JsonResponse(['success' => 'Task updated'], 200);
             } else {
-                return new JsonResponse("Cannot update task", 401);
+                return new JsonResponse(['error' => 'Cannot update task'], 401);
             }
         } else {
-            return new JsonResponse("Task not found", 404);
+            return new JsonResponse(['error' => 'Task not found'], 404);
         }
     }
 
