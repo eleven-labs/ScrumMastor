@@ -27,7 +27,7 @@ class TaskController
         $data = ['title' => $title, 'description' => $this->request->get('description', '')];
         $return = $this->taskService->insertTask($data);
         if ($return) {
-            return new JsonResponse(['success' => 'Task successfully inserted'], 200);
+            return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
         } else {
             return new JsonResponse(['error' => 'Cannot insert task'], 500);
         }
