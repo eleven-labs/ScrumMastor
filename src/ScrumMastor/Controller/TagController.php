@@ -17,9 +17,15 @@ class TagController
     }
 
     /**
-    *
-    * Return all tags (for listing)
-    */
+     * Return all tags (for listing)
+     *
+     * @return JsonResponse    Return a JsonResponse and HTTP Code
+     *
+     * @ApiDescription(section="Tag", description="Return all tags (for listing)")
+     * @ApiMethod(type="get")
+     * @ApiRoute(name="/tags")
+     * @ApiReturn(type="object", sample="Return collection of tag")
+     */
     public function listAction()
     {
         $tags = $this->mongo->tags->find(array(), array("name" => true, "_id" => false));
@@ -28,10 +34,16 @@ class TagController
     }
 
     /**
-    *
-    * Add tag to the tag list
-    *
-    */
+     * Add tag to the tag list
+     * @return JsonResponse    Return a JsonResponse and HTTP Code
+     *
+     * @ApiDescription(section="Tag", description="Add tag to the tag list")
+     * @ApiMethod(type="post")
+     * @ApiRoute(name="/tag")
+     * @ApiParams(name="name", type="string", nullable=false, description="Name of tag")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Name parameter is required'}")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Tag successfully added'}")
+     */
     public function saveAction()
     {
         $name = $this->request->get('name');
@@ -48,7 +60,14 @@ class TagController
     /**
     *
     * Delete tag in tag list
+    * @return JsonResponse    Return a JsonResponse and HTTP Code
     *
+    * @ApiDescription(section="Tag", description="Delete tag in tag list")
+    * @ApiMethod(type="delete")
+    * @ApiRoute(name="/tag")
+    * @ApiParams(name="name", type="string", nullable=false, description="Name of tag")
+    * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Name parameter is required'}")
+    * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Tag successfully added'}")
     */
     public function deleteAction()
     {
@@ -64,10 +83,18 @@ class TagController
     }
 
     /**
-    *
-    * Add tag to a task
-    *
-    */
+     * Add tag to a task
+     * @return JsonResponse    Return a JsonResponse and HTTP Code
+     *
+     * @ApiDescription(section="Tag", description="Add tag to a task")
+     * @ApiMethod(type="post")
+     * @ApiRoute(name="/addTag")
+     * @ApiParams(name="name", type="string", nullable=false, description="Name of tag")
+     * @ApiParams(name="task", type="string", nullable=false, description="ID of task")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Name and ID Task parameters are required'}")
+     * @ApiReturn(type="object", sample="Status Code : 404<br>{'error' : 'Task not found'}")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Tag successfully added'}")
+     */
     public function setTagAction()
     {
         $name = $this->request->get('name');
@@ -93,7 +120,14 @@ class TagController
     /**
     *
     * Search tasks with tag
+    * @return JsonResponse    Return a JsonResponse and HTTP Code
     *
+    * @ApiDescription(section="Tag", description="Search tasks with tag")
+    * @ApiMethod(type="get")
+    * @ApiRoute(name="/search/tag")
+    * @ApiParams(name="name", type="string", nullable=false, description="Name of tag")
+    * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Name parameter is required'}")
+    * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Tag successfully added'}")
     */
     public function searchAction()
     {

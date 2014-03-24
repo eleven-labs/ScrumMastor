@@ -17,6 +17,18 @@ class TaskController
         $this->taskService = $taskService;
     }
 
+    /**
+     * Insert task
+     * @return JsonResponse    Return a JsonResponse and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Insert task. Return a 'success' and 200 HTTP Code, or 'error' and 500 HTTP Code")
+     * @ApiMethod(type="post")
+     * @ApiRoute(name="/task")
+     * @ApiParams(name="title", type="string", nullable=false, description="Title of taks")
+     * @ApiParams(name="description", type="string", nullable=true, description="Description of task")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Task successfullly added'}")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Cannot insert task'}")
+     */
     public function saveAction()
     {
         $title = $this->request->get('title');
@@ -37,6 +49,15 @@ class TaskController
      * Delete task by ID
      * @param  string       $id ID of Task
      * @return JsonResponse String and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Delete task by ID")
+     * @ApiMethod(type="delete")
+     * @ApiRoute(name="/task/{id}")
+     * @ApiParams(name="id", type="string", nullable=false, description="ID of task")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'ID Parameter is empty'}")
+     * @ApiReturn(type="object", sample="Status Code : 204<br>{'success' : 'Task successfullly deleted'}")
+     * @ApiReturn(type="object", sample="Status Code : 401<br>{'error' : 'Cannot remove task'}")
+     * @ApiReturn(type="object", sample="Status Code : 404<br>{'error' : 'Task not found'}")
      */
     public function deleteAction($id)
     {
@@ -66,6 +87,17 @@ class TaskController
      * Edit task by ID
      * @param  string       $id ID of Task
      * @return JsonResponse String and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Update task by ID")
+     * @ApiMethod(type="put")
+     * @ApiRoute(name="/task/{id}")
+     * @ApiParams(name="id", type="string", nullable=false, description="ID of task to update")
+     * @ApiParams(name="title", type="string", nullable=true, description="New title")
+     * @ApiParams(name="description", type="string", nullable=true, description="New description")
+     * @ApiReturn(type="object", sample="Status Code : 406<br>{'error' : 'Title or Description fields cannot be null'}")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Task successfullly updated'}")
+     * @ApiReturn(type="object", sample="Status Code : 401<br>{'error' : 'Cannot update task'}")
+     * @ApiReturn(type="object", sample="Status Code : 404<br>{'error' : 'Task not found'}")
      */
     public function updateAction($id)
     {
@@ -104,6 +136,13 @@ class TaskController
      * Get task by ID
      * @param  string       $id ID of Task
      * @return JsonResponse String and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Get task by ID")
+     * @ApiMethod(type="get")
+     * @ApiRoute(name="/task/{id}")
+     * @ApiParams(name="id", type="string", nullable=false, description="ID of task to get")
+     * @ApiReturn(type="object", sample="Status Code : 406<br>{'error' : 'Title or Description fields cannot be null'}")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'title' : 'HAI', 'description' : 'I can haz cheezburger'}")
      */
     public function getAction($id)
     {

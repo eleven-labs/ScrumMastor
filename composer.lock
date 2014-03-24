@@ -3,8 +3,63 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "90f9d94dd33b0328985346af3daeb3b6",
+    "hash": "45a443bf02ede2d8df89481b1de7be87",
     "packages": [
+        {
+            "name": "crada/php-apidoc",
+            "version": "dev-master",
+            "target-dir": "Crada/Apidoc",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calinrada/php-apidoc.git",
+                "reference": "a589af6a3bf5f21aabc998bb5b156bec02c71b51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calinrada/php-apidoc/zipball/a589af6a3bf5f21aabc998bb5b156bec02c71b51",
+                "reference": "a589af6a3bf5f21aabc998bb5b156bec02c71b51",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Crada": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Saliou",
+                    "email": "kevin@saliou.name",
+                    "homepage": "http://saliou.name",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Calin Rada",
+                    "email": "rada.calin@gmail.com"
+                }
+            ],
+            "description": "Generate documentation for php API based application. No dependency. No framework required.",
+            "homepage": "https://github.com/calinrada/php-apidoc",
+            "keywords": [
+                "api",
+                "documentation",
+                "generator",
+                "php"
+            ],
+            "time": "2014-01-09 17:35:23"
+        },
         {
             "name": "doctrine/annotations",
             "version": "dev-master",
@@ -470,12 +525,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "db7e2aa311869aaf3c2cc76237b2beff05322629"
+                "reference": "98b2d0ba0a9a8f6d0e3b8fda31ce0fb227208fbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/db7e2aa311869aaf3c2cc76237b2beff05322629",
-                "reference": "db7e2aa311869aaf3c2cc76237b2beff05322629",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/98b2d0ba0a9a8f6d0e3b8fda31ce0fb227208fbd",
+                "reference": "98b2d0ba0a9a8f6d0e3b8fda31ce0fb227208fbd",
                 "shasum": ""
             },
             "require": {
@@ -503,7 +558,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "1.8.x-dev"
                 }
             },
             "autoload": {
@@ -530,7 +585,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-03-14 09:32:58"
+            "time": "2014-03-24 11:36:34"
         },
         {
             "name": "pimple/pimple",
@@ -768,20 +823,21 @@
         },
         {
             "name": "symfony/icu",
-            "version": "1.0.x-dev",
+            "version": "1.2.x-dev",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975"
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/98e197da54df1f966dd5e8a4992135703569c987",
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987",
                 "shasum": ""
             },
             "require": {
+                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -811,7 +867,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 09:12:07"
+            "time": "2013-10-04 10:06:38"
         },
         {
             "name": "symfony/symfony",
@@ -1041,6 +1097,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "lexpress/mongodb-service-provider": 20,
+        "crada/php-apidoc": 20,
         "silex/web-profiler": 20
     },
     "platform": [
