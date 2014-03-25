@@ -94,7 +94,8 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request('POST', '/task', array('title' => 'Test unit update', 'description' => 'Task use in test unit'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
-        $this->assertEquals($client->getResponse()->getContent(), "\"true\"");
+        $data = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Task Added', $data['success']);
     }
 
     public function testUpdateDesc()
@@ -126,7 +127,8 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request('POST', '/task', array('title' => 'Test unit get', 'description' => 'Task use in test unit get'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
-        $this->assertEquals($client->getResponse()->getContent(), "\"true\"");
+        $data = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Task Added', $data['success']);
     }
     
     public function testGetTask()
