@@ -9,29 +9,33 @@ class TaskController
 {
     protected $mongo;
     protected $request;
+    protected $taskService;
 
-    public function __construct($mongo, Request $request)
+    public function __construct(Request $request, $taskService)
     {
-        $this->mongo = $mongo;
         $this->request = $request;
+        $this->taskService = $taskService;
     }
 
     public function saveAction()
     {
         $title = $this->request->get('title');
         if (!isset($title)) {
-            return new JsonResponse('false', 500);
+            return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
 
-        $task = array('title' =>  $title, 'description' =>  $this->request->get('description', ''));
-
-        $this->mongo->tasks->insert($task);
-
-        return new JsonResponse(["success" => "Task Added", "_id" => $task["_id"]], 200);
+        $data = ['title' => $title, 'description' => $this->request->get('description', '')];
+        $return = $this->taskService->insertTask($data);
+        if ($return) {
+            return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
+        } else {
+            return new JsonResponse(['error' => 'Cannot insert task'], 500);
+        }
     }
 
     /**
      * Delete task by ID
+     * @param  string       $id ID of Task
      * @return JsonResponse String and HTTP Code
      */
     public function deleteAction($id)
@@ -39,26 +43,60 @@ class TaskController
         $id = $this->request->get('id');
 
         if (empty($id)) {
-            return new JsonResponse("ID Parameter is empty", 500); //input invalid
+            return new JsonResponse(['error' => 'ID Parameter is empty'], 500); //input invalid
         }
 
-        try {
-            $mongoId = new \MongoId($id);
-        } catch (\MongoException $e) {
-            return new JsonResponse("ID Parameter is invalid", 500); //input invalid
+        if (!$this->taskService->isValidId($id)) {
+            return new JsonResponse(['error' => 'ID Parameter is invalid'], 500);
         }
 
-        $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id' => true));
-
-        if ($task->count() === 0) {
-            return new JsonResponse("Task not found", 404); //id not found
-        }
-
-        $return = $this->mongo->tasks->remove(array('_id' => new \MongoId($id)));
-        if (is_null($return['err'])) {
-            return new JsonResponse(null, 204); //delete with success
+        if ($this->taskService->existId($id)) {
+            $return = $this->taskService->removeTask(array('_id' => new \MongoId($id)));
+            if ($return) {
+                return new JsonResponse(['success' => 'Task successfully deleted'], 204); //delete with success
+            } else {
+                return new JsonResponse(['error' => 'Cannot remove task'], 401); //cannot remove
+            }
         } else {
-            return new JsonResponse('Cannot remove task', 401); //cannot remove
+            return new JsonResponse(['error' => 'Task not found'], 404);
+        }
+    }
+
+    /**
+     * Edit task by ID
+     * @param  string       $id ID of Task
+     * @return JsonResponse String and HTTP Code
+     */
+    public function updateAction($id)
+    {
+        $title = $this->request->get('title');
+        $description = $this->request->get('description');
+        $newData = array();
+        if (empty($title) && empty($description)) {
+            return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
+        }
+
+        if (!empty($title)) {
+            $newData['title'] = $title;
+        }
+
+        if (!empty($description)) {
+            $newData['description'] = $description;
+        }
+
+        if ($this->taskService->existId($id)) {
+            $return = $this->taskService->updateTask(
+                array('_id' => new \MongoId($id)),
+                array('$set' => $newData)
+            );
+
+            if ($return) {
+                return new JsonResponse(['success' => 'Task updated'], 200);
+            } else {
+                return new JsonResponse(['error' => 'Cannot update task'], 401);
+            }
+        } else {
+            return new JsonResponse(['error' => 'Task not found'], 404);
         }
     }
 
