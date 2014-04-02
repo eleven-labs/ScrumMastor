@@ -23,7 +23,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request("DELETE", "/task/random", array('id' => 'random'));
         $this->assertEquals(500, $client->getResponse()->getStatusCode());
-        $this->assertEquals("\"ID Parameter is invalid\"", $client->getResponse()->getContent());
+        $this->assertEquals('{"error":"ID Parameter is invalid"}', $client->getResponse()->getContent());
     }
 
     public function testDeleteUnknowId()
@@ -31,7 +31,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request("DELETE", "/task/530f79b2d58c90be0a0041a7", array('id' => '530f79b2d58c90be0a0041a7'));
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $this->assertEquals("\"Task not found\"", $client->getResponse()->getContent());
+        $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
 
     public function testDeleteFixture()
@@ -43,7 +43,6 @@ class TaskControllerTest extends WebTestCaseTest
         $result = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertEquals($result["success"], "Task Added");
-        $this->assertArrayHasKey('_id', $result);
     }
 
     public function testDelete()
@@ -57,7 +56,7 @@ class TaskControllerTest extends WebTestCaseTest
             $this->assertEquals(null, $client->getResponse()->getContent());
         }
     }
-    
+
     public function testUpdateEmptyParameter()
     {
         $client = $this->createClient();
@@ -70,7 +69,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request("PUT", "/task/random", array('id' => 'random', 'title' => 'Test unit has been updated'));
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $this->assertEquals("\"Task not found\"", $client->getResponse()->getContent());
+        $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
 
     public function testUpdateEmptyTitleDescription()
@@ -78,7 +77,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request("PUT", "/task/530f79b2d58c90be0a0041a7", array('id' => '530f79b2d58c90be0a0041a7'));
         $this->assertEquals(406, $client->getResponse()->getStatusCode());
-        $this->assertEquals("\"Title or Description fields cannot be null\"", $client->getResponse()->getContent());
+        $this->assertEquals('{"error":"Title or Description fields cannot be null"}', $client->getResponse()->getContent());
     }
 
     public function testUpdateUnknowId()
@@ -86,7 +85,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request("PUT", "/task/530f79b2d58c90be0a0041a7", array('id' => '530f79b2d58c90be0a0041a7' , 'title' => 'Test unit has been updated'));
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
-        $this->assertEquals("\"Task not found\"", $client->getResponse()->getContent());
+        $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
 
     public function testUpdateFixture()
@@ -94,9 +93,8 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request('POST', '/task', array('title' => 'Test unit update', 'description' => 'Task use in test unit'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
-
-        $data = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('Task Added', $data['success']);
+        $response = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('Task Added', $response['success']);
     }
 
     public function testUpdateDesc()
@@ -107,10 +105,10 @@ class TaskControllerTest extends WebTestCaseTest
         foreach ($tasks as $key => $value) {
             $client->request("PUT", "/task/".$key, array('id' => $key, 'description' => 'Test unit has been updated'));
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
-            $this->assertEquals("\"Task updated\"", $client->getResponse()->getContent());
+            $this->assertEquals('{"success":"Task updated"}', $client->getResponse()->getContent());
         }
     }
-    
+
     public function testUpdate()
     {
         $client = $this->createClient();
@@ -119,7 +117,7 @@ class TaskControllerTest extends WebTestCaseTest
         foreach ($tasks as $key => $value) {
             $client->request("PUT", "/task/".$key, array('id' => $key, 'title' => 'Test unit has been updated'));
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
-            $this->assertEquals("\"Task updated\"", $client->getResponse()->getContent());
+            $this->assertEquals('{"success":"Task updated"}', $client->getResponse()->getContent());
         }
     }
     
