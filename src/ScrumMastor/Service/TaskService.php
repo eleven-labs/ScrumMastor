@@ -5,11 +5,20 @@ class TaskService
 {
     protected $mongo;
 
+    /**
+     * Inject MongoDB dependencies
+     * @param MongoDB MongoDB Service
+     */
     public function __construct($mongo)
     {
         $this->mongo = $mongo;
     }
 
+    /**
+     * Check if ID is MongoId type
+     * @param string ID to check
+     * @return boolean
+     */
     public function isValidId($id)
     {
         if (empty($id)) {
@@ -25,6 +34,11 @@ class TaskService
         }
     }
 
+    /**
+     * Check if ID exist in databse
+     * @param string ID to check
+     * @return boolean
+     */
     public function existId($id)
     {
         if ($this->isValidId($id)) {
@@ -52,6 +66,11 @@ class TaskService
         }
     }
 
+    /**
+     * Insert task in database
+     * @param array Data to insert
+     * @return boolean
+     */
     public function insertTask($data)
     {
         try {
@@ -63,6 +82,11 @@ class TaskService
         return true;
     }
 
+    /**
+     * Remove task in database
+     * @param array 
+     * @return boolean
+     */
     public function removeTask($data)
     {
         try {
@@ -74,6 +98,12 @@ class TaskService
         return true;
     }
 
+    /**
+     * Update task with newData
+     * @param array Data to update
+     * @param array New data 
+     * @return boolean
+     */
     public function updateTask($data, $newData)
     {
         try {
