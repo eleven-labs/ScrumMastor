@@ -94,6 +94,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $client->request('POST', '/task', array('title' => 'Test unit update', 'description' => 'Task use in test unit'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
+
         $data = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('Task Added', $data['success']);
     }
@@ -151,6 +152,5 @@ class TaskControllerTest extends WebTestCaseTest
         $client->request("GET", "/task/530f79b2d58c90be0a0041a7", array('id' => '530f79b2d58c90be0a0041a7'));
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
         $this->assertEquals("\"Task not found\"", $client->getResponse()->getContent());
-        
     }
 }
