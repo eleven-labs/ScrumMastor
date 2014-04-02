@@ -9,13 +9,26 @@ class TaskController
 {
     protected $mongo;
     protected $request;
+    protected $taskService;
 
-    public function __construct($mongo, Request $request)
+    public function __construct(Request $request, $taskService)
     {
-        $this->mongo = $mongo;
         $this->request = $request;
+        $this->taskService = $taskService;
     }
 
+    /**
+     * Insert task
+     * @return JsonResponse    Return a JsonResponse and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Insert task. Return a 'success' and 200 HTTP Code, or 'error' and 500 HTTP Code")
+     * @ApiMethod(type="post")
+     * @ApiRoute(name="/task")
+     * @ApiParams(name="title", type="string", nullable=false, description="Title of taks")
+     * @ApiParams(name="description", type="string", nullable=true, description="Description of task")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Task successfullly added'}")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Cannot insert task'}")
+     */
     public function saveAction()
     {
         $title = $this->request->get('title');
@@ -23,16 +36,28 @@ class TaskController
             return new JsonResponse('false', 500);
         }
 
-        $task = array('title' =>  $title, 'description' =>  $this->request->get('description', ''));
-
-        $this->mongo->tasks->insert($task);
-
-        return new JsonResponse(["success" => "Task Added", "_id" => $task["_id"]], 200);
+        $data = array('title' => $title, 'description' => $this->request->get('description', ''));
+        $return = $this->taskService->insertTask($data);
+        if ($return) {
+            return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
+        } else {
+            return new JsonResponse('Cannot insert Task', 500);
+        }
     }
 
     /**
      * Delete task by ID
+     * @param  string       $id ID of Task
      * @return JsonResponse String and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Delete task by ID")
+     * @ApiMethod(type="delete")
+     * @ApiRoute(name="/task/{id}")
+     * @ApiParams(name="id", type="string", nullable=false, description="ID of task")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'ID Parameter is empty'}")
+     * @ApiReturn(type="object", sample="Status Code : 204<br>{'success' : 'Task successfullly deleted'}")
+     * @ApiReturn(type="object", sample="Status Code : 401<br>{'error' : 'Cannot remove task'}")
+     * @ApiReturn(type="object", sample="Status Code : 404<br>{'error' : 'Task not found'}")
      */
     public function deleteAction($id)
     {
@@ -42,23 +67,89 @@ class TaskController
             return new JsonResponse("ID Parameter is empty", 500); //input invalid
         }
 
-        try {
-            $mongoId = new \MongoId($id);
-        } catch (\MongoException $e) {
-            return new JsonResponse("ID Parameter is invalid", 500); //input invalid
+        if (!$this->taskService->isValidId($id)) {
+            return new JsonResponse("ID Parameter is invalid", 500);
         }
 
-        $task = $this->mongo->tasks->find(array('_id' => new \MongoId($id)), array('_id' => true));
-
-        if ($task->count() === 0) {
-            return new JsonResponse("Task not found", 404); //id not found
-        }
-
-        $return = $this->mongo->tasks->remove(array('_id' => new \MongoId($id)));
-        if (is_null($return['err'])) {
-            return new JsonResponse(null, 204); //delete with success
+        if ($this->taskService->existId($id)) {
+            $return = $this->taskService->removeTask(array('_id' => new \MongoId($id)));
+            if ($return) {
+                return new JsonResponse(null, 204); //delete with success
+            } else {
+                return new JsonResponse('Cannot remove task', 401); //cannot remove
+            }
         } else {
-            return new JsonResponse('Cannot remove task', 401); //cannot remove
+            return new JsonResponse("Task not found", 404);
+        }
+    }
+
+    /**
+     * Edit task by ID
+     * @param  string       $id ID of Task
+     * @return JsonResponse String and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Update task by ID")
+     * @ApiMethod(type="put")
+     * @ApiRoute(name="/task/{id}")
+     * @ApiParams(name="id", type="string", nullable=false, description="ID of task to update")
+     * @ApiParams(name="title", type="string", nullable=true, description="New title")
+     * @ApiParams(name="description", type="string", nullable=true, description="New description")
+     * @ApiReturn(type="object", sample="Status Code : 406<br>{'error' : 'Title or Description fields cannot be null'}")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Task successfullly updated'}")
+     * @ApiReturn(type="object", sample="Status Code : 401<br>{'error' : 'Cannot update task'}")
+     * @ApiReturn(type="object", sample="Status Code : 404<br>{'error' : 'Task not found'}")
+     */
+    public function updateAction($id)
+    {
+        $title = $this->request->get('title');
+        $description = $this->request->get('description');
+        $newData = array();
+        if (empty($title) && empty($description)) {
+            return new JsonResponse("Title or Description fields cannot be null", 406);
+        }
+
+        if (!empty($title)) {
+            $newData['title'] = $title;
+        }
+
+        if (!empty($description)) {
+            $newData['description'] = $description;
+        }
+
+        if ($this->taskService->existId($id)) {
+            $return = $this->taskService->updateTask(
+                array('_id' => new \MongoId($id)),
+                array('$set' => $newData)
+            );
+
+            if ($return) {
+                return new JsonResponse("Task updated", 200);
+            } else {
+                return new JsonResponse("Cannot update task", 401);
+            }
+        } else {
+            return new JsonResponse("Task not found", 404);
+        }
+    }
+
+    /**
+     * Get task by ID
+     * @param  string       $id ID of Task
+     * @return JsonResponse String and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="Get task by ID")
+     * @ApiMethod(type="get")
+     * @ApiRoute(name="/task/{id}")
+     * @ApiParams(name="id", type="string", nullable=false, description="ID of task to get")
+     * @ApiReturn(type="object", sample="Status Code : 406<br>{'error' : 'Title or Description fields cannot be null'}")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>{'title' : 'HAI', 'description' : 'I can haz cheezburger'}")
+     */
+    public function getAction($id)
+    {
+        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, '_id' => false))) {
+            return new JsonResponse($task, 200);
+        } else {
+            return new JsonResponse("Task not found", 404);
         }
     }
 
