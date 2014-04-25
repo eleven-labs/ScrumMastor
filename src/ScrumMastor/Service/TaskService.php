@@ -65,6 +65,13 @@ class TaskService
             return false;
         }
     }
+    
+    public function getTasks()
+    {
+        $tasks = $this->mongo->tasks->find();
+        
+        return iterator_to_array($tasks);
+    }
 
     /**
      * Insert task in database

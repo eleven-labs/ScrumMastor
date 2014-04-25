@@ -17,6 +17,21 @@ class TaskController
         $this->taskService = $taskService;
     }
 
+    public function listAction()
+    {
+	$ret = array();
+        if ($tasks = $this->taskService->getTasks()) {
+		foreach($tasks as $task)
+		{
+		  $ret[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => 'test');
+		}
+
+            return new JsonResponse($ret, 200);
+        } else {
+            return new JsonResponse("Task not found", 404);
+        }
+    }
+
     /**
      * Insert task
      * @return JsonResponse    Return a JsonResponse and HTTP Code
@@ -31,7 +46,8 @@ class TaskController
      */
     public function saveAction()
     {
-        $title = $this->request->get('title');
+        $model = json_decode($this->request->get('model'), true);
+        $title = $model['title'];
         if (!isset($title)) {
             return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
