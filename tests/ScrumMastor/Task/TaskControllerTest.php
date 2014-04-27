@@ -37,7 +37,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testDeleteFixture()
     {
         $client = $this->createClient();
-        $client->request('POST', '/task', array('title' => 'Test unit', 'description' => 'Task use in test unit'));
+        $client->request('PUT', '/task/', array('title' => 'Test unit', 'description' => 'Task use in test unit'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -91,7 +91,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testUpdateFixture()
     {
         $client = $this->createClient();
-        $client->request('POST', '/task', array('title' => 'Test unit update', 'description' => 'Task use in test unit'));
+        $client->request('PUT', '/task/', array('title' => 'Test unit update', 'description' => 'Task use in test unit'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
         $response = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('Task Added', $response['success']);
@@ -124,7 +124,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testGetTaskFixture()
     {
         $client = $this->createClient();
-        $client->request('POST', '/task', array('title' => 'Test unit get', 'description' => 'Task use in test unit get'));
+        $client->request('PUT', '/task/', array('title' => 'Test unit get', 'description' => 'Task use in test unit get'));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
         $data = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('Task Added', $data['success']);
