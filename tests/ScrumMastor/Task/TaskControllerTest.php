@@ -135,6 +135,7 @@ class TaskControllerTest extends WebTestCaseTest
         $client = $this->createClient();
         $tasks = $this->app['mongo']->tasks->find(array('title'=>'Test unit get'));
         $tasks = iterator_to_array($tasks);
+        
         foreach ($tasks as $key => $value) {
             $client->request("GET", "/task/".$key, array('id' => $key));
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
