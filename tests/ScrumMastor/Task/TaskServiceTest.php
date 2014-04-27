@@ -120,6 +120,22 @@ class TaskServiceTest extends WebTestCaseTest
         $this->assertEquals($return[0]['title'], 'Test service as unit get');
         $this->assertEquals($return[0]['description'], 'I can haz cheezburger');
     }
+
+    public function testGetTasks()
+    {
+        $data = array('title' => 'Test service as unit get', 'description' => 'I can haz cheezburger');
+        $this->app['mongo']->tasks->insert($data);
+        $data = array('title' => 'Test service as unit get 2', 'description' => 'I can haz cheezburger 2');
+        $this->app['mongo']->tasks->insert($data);
+
+        $taskService = new \ScrumMastor\Service\TaskService($this->app['mongo']);
+        $return = $taskService->getTasks();
+        $this->assertInternalType('array', $return);
+        $this->assertEquals($return[0]['title'], 'Test service as unit get');
+        $this->assertEquals($return[0]['description'], 'I can haz cheezburger');
+        $this->assertEquals($return[1]['title'], 'Test service as unit get 2');
+        $this->assertEquals($return[2]['description'], 'I can haz cheezburger 2');
+    }
     
     public function testGetTaskWrongId(){
         $taskService = new \ScrumMastor\Service\TaskService($this->app['mongo']);

@@ -141,6 +141,18 @@ class TaskControllerTest extends WebTestCaseTest
             $this->assertEquals('[{"title":"Test unit get","description":"Task use in test unit get"}]', $client->getResponse()->getContent());
         }
     }
+
+    public function testGetTasks()
+    {
+        $client = $this->createClient();
+        $tasks = $this->app['mongo']->tasks->find();
+        $tasks = iterator_to_array($tasks);
+        foreach ($tasks as $key => $value) {
+            $client->request("GET", "/task");
+            $this->assertEquals(200, $client->getResponse()->getStatusCode());
+            $this->assertEquals('[{"title":"Test unit get","description":"Task use in test unit get"}]', $client->getResponse()->getContent());
+        }
+    }
     
     public function testGetTaskUnknowId()
     {

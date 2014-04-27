@@ -54,6 +54,10 @@ class TaskService
         }
     }
 
+    /**
+     * Get task by id in database
+     * @return array of task
+     */
     public function getTaskById($id, $filter = array('_id' => true))
     {
         if ($this->existId($id)) {
@@ -66,6 +70,10 @@ class TaskService
         }
     }
     
+    /**
+     * List all task in database
+     * @return array of task
+     */
     public function getTasks()
     {
         $tasks = $this->mongo->tasks->find();
