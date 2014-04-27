@@ -139,7 +139,7 @@ class ScrumMastorApplication extends SilexApplication
     protected function loadRoute()
     {
         // Url for save the task
-        $this->put('/task/', 'task.controller:saveAction');
+        $this->post('/task', 'task.controller:saveAction');
 
         // Url for update task
         $this->put('/task/{id}', 'task.controller:updateAction');
@@ -167,6 +167,5 @@ class ScrumMastorApplication extends SilexApplication
 
         // Url for delete tag in tag list
         $this->delete('/tag', 'tag.controller:deleteAction');
-
     }
 }
