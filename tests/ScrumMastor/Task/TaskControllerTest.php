@@ -15,7 +15,7 @@ class TaskControllerTest extends WebTestCaseTest
     {
         $client = $this->createClient();
         $client->request("DELETE", "/task/");
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        $this->assertEquals(405, $client->getResponse()->getStatusCode());
     }
 
     public function testDeleteInvalidParameter()
@@ -37,7 +37,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testDeleteFixture()
     {
         $client = $this->createClient();
-        $client->request('PUT', '/task/', array('title' => 'Test unit', 'description' => 'Task use in test unit'));
+        $client->request('PUT', '/task/', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit'))));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
 
         $result = json_decode($client->getResponse()->getContent(), true);
