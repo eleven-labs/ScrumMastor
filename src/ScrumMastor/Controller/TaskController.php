@@ -18,12 +18,34 @@ class TaskController
     }
 
     /**
+     * List of tasks
+     * @return JsonResponse    Return a JsonResponse and HTTP Code
+     *
+     * @ApiDescription(section="Task", description="List fo tasks. Return a 'success' and 200 HTTP Code, or 'error' and 500 HTTP Code")
+     * @ApiMethod(type="get")
+     * @ApiRoute(name="/task")
+     * @ApiReturn(type="object", sample="Status Code : 200<br>[{'id' : 34344, title' : 'HAI', 'description' : 'I can haz cheezburger'}, {'id' : 34345, 'title' : 'HAI', 'description' : 'I can haz cheezburger'}]")
+     * @ApiReturn(type="object", sample="Status Code : 500<br>{'error' : 'Cannot list task'}")
+     */
+    public function listAction()
+    {
+        $list = array();
+        $tasks = $this->taskService->getTasks();
+
+        foreach($tasks as $task) {
+            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description']);
+        }
+
+        return new JsonResponse($list, 200);
+    }
+
+    /**
      * Insert task
      * @return JsonResponse    Return a JsonResponse and HTTP Code
      *
      * @ApiDescription(section="Task", description="Insert task. Return a 'success' and 200 HTTP Code, or 'error' and 500 HTTP Code")
      * @ApiMethod(type="post")
-     * @ApiRoute(name="/task")
+     * @ApiRoute(name="/task/")
      * @ApiParams(name="title", type="string", nullable=false, description="Title of taks")
      * @ApiParams(name="description", type="string", nullable=true, description="Description of task")
      * @ApiReturn(type="object", sample="Status Code : 200<br>{'success' : 'Task successfullly added'}")
@@ -31,7 +53,8 @@ class TaskController
      */
     public function saveAction()
     {
-        $title = $this->request->get('title');
+        $model = json_decode($this->request->get('model'), true);
+        $title = $model['title'];
         if (!isset($title)) {
             return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
