@@ -124,8 +124,9 @@ class TaskController
      */
     public function updateAction($id)
     {
-        $title = $this->request->get('title');
-        $description = $this->request->get('description');
+        $model = json_decode($this->request->get('model'), true);
+        $title = $model['title'];
+        $description = $model['description'];
         $newData = array();
         if (empty($title) && empty($description)) {
             return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);

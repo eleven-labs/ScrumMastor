@@ -67,8 +67,8 @@ class TaskControllerTest extends WebTestCaseTest
     public function testUpdateInvalidIdParameter()
     {
         $client = $this->createClient();
-        $client->request("PUT", "/task/random", array('id' => 'random', 'title' => 'Test unit has been updated'));
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        $client->request("PUT", "/task/random",  array('model' => json_encode(array('id' => 'random', 'title' => 'Test unit has been updated', 'description' => 'description'))));
+	$this->assertEquals(404, $client->getResponse()->getStatusCode());
         $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
 
@@ -83,7 +83,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testUpdateUnknowId()
     {
         $client = $this->createClient();
-        $client->request("PUT", "/task/530f79b2d58c90be0a0041a7", array('id' => '530f79b2d58c90be0a0041a7' , 'title' => 'Test unit has been updated'));
+        $client->request("PUT", "/task/530f79b2d58c90be0a0041a7", array('model' => json_encode(array('id' => '530f79b2d58c90be0a0041a7' , 'title' => 'Test unit has been updated', 'description' => 'description'))));
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
         $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
