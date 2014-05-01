@@ -5,6 +5,7 @@ namespace ScrumMastor\Provider;
 use Silex\ServiceProviderInterface;
 use ScrumMastor\Controller\TaskController;
 use ScrumMastor\Controller\TagController;
+use ScrumMastor\Controller\GithubController;
 use ScrumMastor\Service\TaskService;
 use Silex\Application;
 

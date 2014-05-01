@@ -16,7 +16,7 @@ class GithubController
         $this->github = $github;
     }
 
-    public function githubAction() 
+    public function authAction() 
     {
   	    $code = $this->request->get('code');
 
