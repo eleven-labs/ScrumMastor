@@ -11,6 +11,12 @@ class TaskController
     protected $request;
     protected $taskService;
 
+    public function __construct(Request $request, $taskService)
+    {
+        $this->request = $request;
+        $this->taskService = $taskService;
+    }
+
     /**
      * List of tasks
      * @return JsonResponse    Return a JsonResponse and HTTP Code
