@@ -167,5 +167,7 @@ class ScrumMastorApplication extends SilexApplication
 
         // Url for delete tag in tag list
         $this->delete('/tag', 'tag.controller:deleteAction');
-    }
+   
+        $this->post('/github', 'task.controller:githubAction'); 
+   }
 }
