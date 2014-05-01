@@ -11,33 +11,6 @@ class TaskController
     protected $request;
     protected $taskService;
 
-    public function __construct(Request $request, $taskService)
-    {
-        $this->request = $request;
-        $this->taskService = $taskService;
-    }
-
-    public function githubAction(){
-  	$code = $this->request->get('code');
-
-       $ch = curl_init();
-
-// configuration des options
-
-$data = array('client_id' => 'bfcda35e836f13ee9d72', 'client_secret' => '4781cce7a55a180ed3ad20eeb6552562712fe0fa', 'code' => $code);
-curl_setopt($ch, CURLOPT_URL, "https://github.com/login/oauth/access_token");
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-// exécution de la session
-$response = curl_exec($ch);
-
-// fermeture des ressources
-curl_close($ch);
-
-return new JsonResponse($response, 200);
-    }
-
     /**
      * List of tasks
      * @return JsonResponse    Return a JsonResponse and HTTP Code
