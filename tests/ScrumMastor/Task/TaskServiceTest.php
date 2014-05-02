@@ -60,7 +60,7 @@ class TaskServiceTest extends WebTestCaseTest
     public function testInsertTaskEmpty(){
         $taskService = new \ScrumMastor\Service\TaskService($this->app['mongo']);
         $return = $taskService->insertTask(array());
-        $this->assertFalse($return);
+        $this->assertTrue($return);
     }
     
     public function testInsertTaskString(){
