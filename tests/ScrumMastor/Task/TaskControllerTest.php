@@ -37,7 +37,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testDeleteFixture()
     {
         $client = $this->createClient();
-        $client->request('POST', '/task', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit'))));
+        $client->request('POST', '/task', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit', 'username' => 'Username unit'))));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
 
         $result = json_decode($client->getResponse()->getContent(), true);
@@ -67,7 +67,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testUpdateInvalidIdParameter()
     {
         $client = $this->createClient();
-        $client->request("PUT", "/task/random",  array('model' => json_encode(array('id' => 'random', 'title' => 'Test unit has been updated', 'description' => 'description'))));
+        $client->request("PUT", "/task/random",  array('model' => json_encode(array('id' => 'random', 'title' => 'Test unit has been updated', 'description' => 'description', 'username' => 'Username unit'))));
 	$this->assertEquals(404, $client->getResponse()->getStatusCode());
         $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
@@ -83,7 +83,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testUpdateUnknowId()
     {
         $client = $this->createClient();
-        $client->request("PUT", "/task/530f79b2d58c90be0a0041a7", array('model' => json_encode(array('id' => '530f79b2d58c90be0a0041a7' , 'title' => 'Test unit has been updated', 'description' => 'description'))));
+        $client->request("PUT", "/task/530f79b2d58c90be0a0041a7", array('model' => json_encode(array('id' => '530f79b2d58c90be0a0041a7' , 'title' => 'Test unit has been updated', 'description' => 'description', 'username' => 'Username test'))));
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
         $this->assertEquals('{"error":"Task not found"}', $client->getResponse()->getContent());
     }
@@ -91,7 +91,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testUpdateFixture()
     {
         $client = $this->createClient();
-        $client->request('POST', '/task', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit'))));
+        $client->request('POST', '/task', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit', 'username' => 'Username test'))));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
         $response = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('Task Added', $response['success']);

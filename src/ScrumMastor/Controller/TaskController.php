@@ -33,7 +33,7 @@ class TaskController
         $tasks = $this->taskService->getTasks();
 
         foreach($tasks as $task) {
-            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description']);
+            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description'], 'username' => $task['username']);
         }
 
         return new JsonResponse($list, 200);
@@ -59,7 +59,7 @@ class TaskController
             return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
 
-        $data = ['title' => $title, 'description' => $this->request->get('description', '')];
+        $data = ['title' => $title, 'description' => $this->request->get('description', ''), 'username' => $this->request->get('username', '')];
         $return = $this->taskService->insertTask($data);
         if ($return) {
             return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
@@ -127,6 +127,7 @@ class TaskController
         $model = json_decode($this->request->get('model'), true);
         $title = $model['title'];
         $description = $model['description'];
+        $username = $model['username'];
         $newData = array();
         if (empty($title) && empty($description)) {
             return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
@@ -138,6 +139,10 @@ class TaskController
 
         if (!empty($description)) {
             $newData['description'] = $description;
+        }
+ 
+        if (!empty($username)) {
+            $newData['username'] = $username;
         }
 
         if ($this->taskService->existId($id)) {
@@ -170,7 +175,7 @@ class TaskController
      */
     public function getAction($id)
     {
-        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, '_id' => false))) {
+        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, 'username' => true, '_id' => false))) {
             return new JsonResponse($task, 200);
         } else {
             return new JsonResponse("Task not found", 404);
