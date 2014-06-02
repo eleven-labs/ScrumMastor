@@ -59,7 +59,7 @@ class TaskController
             return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
 
-        $data = ['title' => $title, 'description' => $this->request->get('description', ''), 'username' => $this->request->get('username', '')];
+        $data = ['title' => $title, 'description' => $model['description'], 'username' => $model['username']];
         $return = $this->taskService->insertTask($data);
         if ($return) {
             return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
