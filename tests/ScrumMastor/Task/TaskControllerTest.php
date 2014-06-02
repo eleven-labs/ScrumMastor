@@ -124,7 +124,7 @@ class TaskControllerTest extends WebTestCaseTest
     public function testGetTaskFixture()
     {
         $client = $this->createClient();
-        $client->request('POST', '/task', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit'))));
+        $client->request('POST', '/task', array('model' => json_encode(array('title' => 'Test unit', 'description' => 'Task use in test unit', 'username' => 'Username test'))));
         $this->assertEquals($client->getResponse()->getStatusCode(), 200);
         $data = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('Task Added', $data['success']);
