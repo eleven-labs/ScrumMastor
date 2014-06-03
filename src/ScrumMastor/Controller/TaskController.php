@@ -30,10 +30,10 @@ class TaskController
     public function listAction()
     {
         $list = array();
-        $tasks = $this->taskService->getTasks();
+        $tasks = $this->taskService->getTasks('priority');
 
         foreach($tasks as $task) {
-            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description'], 'username' => $task['username']);
+            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description'], 'username' => $task['username'], 'priority' => $task['priority']);
         }
 
         return new JsonResponse($list, 200);
@@ -59,7 +59,7 @@ class TaskController
             return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
 
-        $data = ['title' => $title, 'description' => $model['description'], 'username' => $model['username']];
+        $data = ['title' => $title, 'description' => $model['description'], 'username' => $model['username'], 'priority' => $model['priority']];
         $return = $this->taskService->insertTask($data);
         if ($return) {
             return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
@@ -128,6 +128,8 @@ class TaskController
         $title = $model['title'];
         $description = $model['description'];
         $username = $model['username'];
+        $priority = $model['priority'];
+
         $newData = array();
         if (empty($title) && empty($description)) {
             return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
@@ -143,6 +145,10 @@ class TaskController
  
         if (!empty($username)) {
             $newData['username'] = $username;
+        }
+
+	if (!empty($priority)) {
+            $newData['priority'] = (int)$priority;
         }
 
         if ($this->taskService->existId($id)) {
@@ -175,7 +181,7 @@ class TaskController
      */
     public function getAction($id)
     {
-        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, 'username' => true, '_id' => false))) {
+        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, 'username' => true, 'priority' => true, '_id' => false))) {
             return new JsonResponse($task, 200);
         } else {
             return new JsonResponse("Task not found", 404);

@@ -74,10 +74,12 @@ class TaskService
      * List all task in database
      * @return array of task
      */
-    public function getTasks()
+    public function getTasks($orderby = '_id')
     {
         $tasks = $this->mongo->tasks->find();
         
+        $tasks = $tasks->sort(array($orderby => 1));
+
         return iterator_to_array($tasks);
     }
 
