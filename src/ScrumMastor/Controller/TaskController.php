@@ -131,10 +131,10 @@ class TaskController
         $priority = $model['priority'];
 
         $newData = array();
-     /*   if (empty($title) && empty($description)) {
+        if (!isset($title) && !isset($description)) {
             return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
         }
-*/
+
         $newData['title'] = $title;
         $newData['description'] = $description;
         $newData['username'] = $username;
