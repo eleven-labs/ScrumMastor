@@ -131,25 +131,14 @@ class TaskController
         $priority = $model['priority'];
 
         $newData = array();
-        if (empty($title) && empty($description)) {
+     /*   if (empty($title) && empty($description)) {
             return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
         }
-
-        if (!empty($title)) {
-            $newData['title'] = $title;
-        }
-
-        if (!empty($description)) {
-            $newData['description'] = $description;
-        }
- 
-        if (!empty($username)) {
-            $newData['username'] = $username;
-        }
-
-	if (!empty($priority)) {
-            $newData['priority'] = (int)$priority;
-        }
+*/
+        $newData['title'] = $title;
+        $newData['description'] = $description;
+        $newData['username'] = $username;
+        $newData['priority'] = (int)$priority;
 
         if ($this->taskService->existId($id)) {
             $return = $this->taskService->updateTask(
@@ -177,7 +166,6 @@ class TaskController
      * @ApiRoute(name="/task/{id}")
      * @ApiParams(name="id", type="string", nullable=false, description="ID of task to get")
      * @ApiReturn(type="object", sample="Status Code : 406<br>{'error' : 'Title or Description fields cannot be null'}")
-     * @ApiReturn(type="object", sample="Status Code : 200<br>{'title' : 'HAI', 'description' : 'I can haz cheezburger'}")
      */
     public function getAction($id)
     {
