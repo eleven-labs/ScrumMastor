@@ -30,10 +30,10 @@ class TaskController
     public function listAction()
     {
         $list = array();
-        $tasks = $this->taskService->getTasks();
+        $tasks = $this->taskService->getTasks('priority');
 
         foreach($tasks as $task) {
-            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description'], 'username' => $task['username']);
+            $list[] = array('id' => (string)$task['_id'],  'title' => $task['title'], 'description' => $task['description'], 'username' => $task['username'], 'priority' => $task['priority']);
         }
 
         return new JsonResponse($list, 200);
@@ -59,7 +59,7 @@ class TaskController
             return new JsonResponse(['error' => 'Title parameter is required'], 500);
         }
 
-        $data = ['title' => $title, 'description' => $model['description'], 'username' => $model['username']];
+        $data = ['title' => $title, 'description' => $model['description'], 'username' => $model['username'], 'priority' => $model['priority']];
         $return = $this->taskService->insertTask($data);
         if ($return) {
             return new JsonResponse(["success" => "Task Added", "_id" => $data["_id"]], 200);
@@ -128,22 +128,17 @@ class TaskController
         $title = $model['title'];
         $description = $model['description'];
         $username = $model['username'];
+        $priority = $model['priority'];
+
         $newData = array();
-        if (empty($title) && empty($description)) {
+        if (!isset($title) && !isset($description)) {
             return new JsonResponse(['error' => 'Title or Description fields cannot be null'], 406);
         }
 
-        if (!empty($title)) {
-            $newData['title'] = $title;
-        }
-
-        if (!empty($description)) {
-            $newData['description'] = $description;
-        }
- 
-        if (!empty($username)) {
-            $newData['username'] = $username;
-        }
+        $newData['title'] = $title;
+        $newData['description'] = $description;
+        $newData['username'] = $username;
+        $newData['priority'] = (int)$priority;
 
         if ($this->taskService->existId($id)) {
             $return = $this->taskService->updateTask(
@@ -171,11 +166,10 @@ class TaskController
      * @ApiRoute(name="/task/{id}")
      * @ApiParams(name="id", type="string", nullable=false, description="ID of task to get")
      * @ApiReturn(type="object", sample="Status Code : 406<br>{'error' : 'Title or Description fields cannot be null'}")
-     * @ApiReturn(type="object", sample="Status Code : 200<br>{'title' : 'HAI', 'description' : 'I can haz cheezburger'}")
      */
     public function getAction($id)
     {
-        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, 'username' => true, '_id' => false))) {
+        if ($task = $this->taskService->getTaskById($id, array('title' => true, 'description' => true, 'username' => true, 'priority' => true, '_id' => false))) {
             return new JsonResponse($task, 200);
         } else {
             return new JsonResponse("Task not found", 404);

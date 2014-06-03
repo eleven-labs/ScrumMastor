@@ -45,7 +45,7 @@ class TagControllerTest extends WebTestCaseTest
                 ["tasks"],
                 //List of init request
                 [
-                    0 => ["type" => "POST", "url" => "/task", "parameters" => ["model" => '{"title":"cs","description":"sccs","username":"user"}']]
+                    0 => ["type" => "POST", "url" => "/task", "parameters" => ["model" => '{"title":"cs","description":"sccs","username":"user","priority":0}']]
                 ],
                 //Expected return code
                 200,
